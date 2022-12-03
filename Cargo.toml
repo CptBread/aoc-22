@@ -1,0 +1,15 @@
+[package]
+name = "aoc-22"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+itertools = "0.9.*"
+vek = "0.15.*"
+intbits = "0.2.0"
+retain_mut = "0.1.5"
+rand = "0.8.*"
+#aoc_util = {git = "https://github.com/CptBread/aoc-util"}
+aoc_util = {path = "N:/Programming/Projects/Rust/aoc-util"}
