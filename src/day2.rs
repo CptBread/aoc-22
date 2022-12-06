@@ -1,5 +1,4 @@
 use aoc_util::parse_f::*;
-use itertools::*;
 
 #[allow(dead_code)]
 pub fn solve()
