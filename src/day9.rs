@@ -29,7 +29,7 @@ pub fn solve()
 	let mut visited2 = HashSet::new();
 	let mut head = Pos::zero();
 	let mut tail = Pos::zero();
-	let mut tail2 = vec![tail; 9];
+	let mut tail_cont = vec![tail; 8];
 	visited.insert(tail);
 	visited2.insert(tail);
 
@@ -47,21 +47,21 @@ pub fn solve()
 			move_tail(&head, &mut tail);
 			visited.insert(tail);
 
-			move_tail(&head, &mut tail2[0]);
-			for i in 1..tail2.len() {
-				let h = tail2[i - 1].clone();
-				move_tail(&h, &mut tail2[i]);
+			move_tail(&tail, &mut tail_cont[0]);
+			for i in 1..tail_cont.len() {
+				let h = tail_cont[i - 1].clone();
+				move_tail(&h, &mut tail_cont[i]);
 			}
-			visited2.insert(*tail2.last().unwrap());
+			visited2.insert(*tail_cont.last().unwrap());
 		}
 
-		// let max = tail2.iter().chain(std::iter::once(&head)).fold(Pos::zero(), |acc, v| Pos::max(*v, acc));
-		// let min = tail2.iter().chain(std::iter::once(&head)).fold(Pos::zero(), |acc, v| Pos::min(*v, acc));
+		// let max = tail_cont.iter().chain(std::iter::once(&head)).fold(Pos::zero(), |acc, v| Pos::max(*v, acc));
+		// let min = tail_cont.iter().chain(std::iter::once(&head)).fold(Pos::zero(), |acc, v| Pos::min(*v, acc));
 		// for y in min.y..=max.y {
 		// 	for x in min.x..=max.x {
 		// 		let at = Pos::new(x, y);
 		// 		let mut c = '.';
-		// 		if tail2.contains(&at) {
+		// 		if tail_cont.contains(&at) {
 		// 			c = '#';
 		// 		}
 		// 		if head == at {
@@ -79,7 +79,7 @@ pub fn solve()
 	// 	for x in min.x..=max.x {
 	// 		let at = Pos::new(x, y);
 	// 		let mut c = '.';
-	// 		if tail2.contains(&at) {
+	// 		if tail_cont.contains(&at) {
 	// 			c = '#';
 	// 		}
 	// 		if head == at {
@@ -90,7 +90,6 @@ pub fn solve()
 	// 	println!("");
 	// }
 
-	println!("{}", visited.len());
-	println!("{}", visited2.len());
-	// println!("{:?}", tail2);
+	// 6266, 2369
+	println!("{} {}", visited.len(), visited2.len());
 }
