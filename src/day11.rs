@@ -95,7 +95,6 @@ impl<'a> ParseTUtil<'a> for Monkey {
 			"\r\n    If true: throw to monkey ", usize,
 			"\r\n    If false: throw to monkey ", usize, ""
 		)?;
-		items.reverse();
 		Some(Self {
 			id, items, args: (a0, a1), op, test, if_t, if_f
 		})
@@ -105,7 +104,7 @@ impl<'a> ParseTUtil<'a> for Monkey {
 fn distribute(cmd: &mut Vec<(usize, i64)>, monk: &mut Vec<Monkey>) {
 	for (t, i) in cmd.iter() {
 		// println!("{} goes to {}", i, t);
-		monk[*t].items.insert(0, *i);
+		monk[*t].items.push(*i)
 	}
 	cmd.clear();
 }
@@ -167,4 +166,6 @@ pub fn solve()
 	let w1 = inspections.pop().unwrap();
 	
 	println!("{:?}", w0 * w1);
+	// 64032
+	// 12729522272
 }
