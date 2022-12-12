@@ -13,7 +13,7 @@ fn dijk(start: usize, target: usize, arr: &mut Array2D<(u8, i32)>) -> i32 {
 		let at = arr.idx_to_pos(idx);
 		for np in arr.neighbours(at).iter().filter_map(|v| *v) {
 			let n = arr.get_mut(np).unwrap();
-			if n.1 == !0 && cur.0 + 1 >= n.0 {
+			if n.1 == !0 && cur.0 <= n.0 + 1 {
 				n.1 = cur.1 + 1;
 				let np = arr.pos_to_idx(np).unwrap();
 				if np == target {
@@ -48,27 +48,15 @@ pub fn solve()
 		(res, !0)
 	});
 
-	let mut best = std::i32::MAX;
-	for idx in 0..arr.data.len() {
-		if arr.data[idx].0 == 0 && idx != start {
-			let mut copy = arr.clone();
-			let steps = dijk(idx, target, &mut copy);
-			if steps != -1 {
-				best = steps.min(best);
-			}
+	let steps = dijk(target, start, &mut arr);
+	let best = arr.data.iter().fold(std::i32::MAX, |best, c| {
+		if c.0 == 0 && c.1 != !0{
+			best.min(c.1)
 		}
-	}
-
-	let steps = dijk(start, target, &mut arr);
-
-	// arr.print(|(h, v)| {
-	// 	if *v == !0 {
-	// 		(h + b'a') as char
-	// 	}
-	// 	else {
-	// 		(h + b'A') as char
-	// 	}
-	// });
+		else {
+			best
+		}
+	});
 
 	println!("{:?} {:?}", steps, best);
 }
