@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use vek::vec::Vec2;
 
 use aoc_util::parse_t::*;
+use crate::utils::*;
 
 fn read_pos(s: &str) -> Vec2<i32> {
 	let (x, y) = parse_t!(s, i32, ",", i32, "").unwrap();
@@ -24,7 +25,7 @@ pub fn solve()
 	let source_pos = Vec2::new(500, 0);
 
 	let _print_map = |m: &HashMap<Vec2<i32>, Item>| {
-		let (min, max) = m.keys().fold((Vec2::new(500, 0), Vec2::new(500, 0)), |(min, max), v| (Vec2::min(min, *v), Vec2::max(max, *v)));
+		let (min, max) = map_area(source_pos, m);
 		for y in min.y..=max.y {
 			for x in min.x..=max.x {
 				let c = match m.get(&Vec2::new(x, y)) {
@@ -58,7 +59,7 @@ pub fn solve()
 		}
 	}
 
-	let (min, max) = map.keys().fold((Vec2::new(500, 0), Vec2::new(500, 0)), |(min, max), v| (Vec2::min(min, *v), Vec2::max(max, *v)));
+	let (min, max) = map_area(source_pos, &map);
 	let down = Vec2::new(0, 1);
 	let dl = Vec2::new(-1, 1);
 	let dr = Vec2::new(1, 1);
