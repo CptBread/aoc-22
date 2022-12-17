@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, time::Instant};
 use vek::vec::Vec2;
 
 use aoc_util::parse_t::*;
@@ -10,6 +10,7 @@ fn dist(v0: Vec2<i32>, v1: Vec2<i32>) -> i32 {
 #[allow(dead_code)]
 pub fn solve()
 {
+	let start = Instant::now();
 	let data = std::fs::read_to_string("data/day15.txt").unwrap();
 	let mut map = HashMap::new();
 	let mut pairs = Vec::new();
@@ -30,6 +31,7 @@ pub fn solve()
 
 	// Sort by the lowest y
 	pairs.sort_by(|(l, _, ld), (r, _, rd)| (l.y - ld).cmp(&(r.y - rd)));
+	let mut tot = start.elapsed().as_secs_f32();
 
 	let row = 2000000;
 	let mut p0 = 0;
@@ -56,6 +58,7 @@ pub fn solve()
 		}
 	}
 
+	let start = Instant::now();
 	let mut search = pairs.as_slice();
 	let mut at = Vec2::zero();
 	'fy: for y in 0..=4000000 {
@@ -84,12 +87,15 @@ pub fn solve()
 				}
 			}
 			// i.e. found nothing
-			break 'fy;
+			// break 'fy;
 		}
 	}
+	tot += start.elapsed().as_secs_f32();
+
 
 	// 4811413 13171855019123
 	// println!("{:?}", p0);
 	println!("{:?} {:?}", p0, (at.x as i64) * 4000000 + at.y as i64);
+	println!("{}s", tot);
 	// println!("{:?} {:?}", (at.x as i64) * 4000000 + at.y as i64 , at);
 }
