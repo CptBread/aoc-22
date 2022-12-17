@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 use aoc_util::parse_t::*;
 
 
@@ -88,7 +86,7 @@ impl Monkey {
 impl<'a> ParseTUtil<'a> for Monkey {
 	type Res = Self;
 	fn parse(s: &str) -> Option<Self> {
-		let (id, mut items, a0, op, a1, test, if_t, if_f) = parse_t!(s,
+		let (id, items, a0, op, a1, test, if_t, if_f) = parse_t!(s,
 			"Monkey ", usize, ":\r\n  Starting items: ", Csv<i64>,
 			"\r\n  Operation: new = ", Arg, " ", Op, " ", Arg,
 			"\r\n  Test: divisible by ", i64,

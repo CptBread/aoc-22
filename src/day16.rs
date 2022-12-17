@@ -1,7 +1,5 @@
 use std::collections::{HashMap, VecDeque};
 
-use itertools::Itertools;
-use vek::vec::Vec2;
 use intbits::*;
 
 use aoc_util::parse_t::*;
@@ -66,8 +64,8 @@ pub fn solve()
 	});
 	let start_from = *names.get(&"AA".to_string()).unwrap();
 	let best_flow = valves.iter().fold(0u32, |acc, v| acc + v.flow);
-	// < 2290
-	// println!("{}", search(start_from, 30, 0, 0, start_open, &dist, &valves));
+
+	println!("{}", search(start_from, 30, 0, 0, start_open, &dist, &valves));
 	println!("{}", search2([(start_from, 0, false), (start_from, 0, false)], 26, 0, 0, start_open, &dist, &valves, (best_flow, 0)));
 }
 

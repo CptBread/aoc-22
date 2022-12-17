@@ -61,7 +61,7 @@ pub fn solve()
 	let start = Instant::now();
 	let mut search = pairs.as_slice();
 	let mut at = Vec2::zero();
-	'fy: for y in 0..=4000000 {
+	'_fy: for y in 0..=4000000 {
 		while let Some(((s, _, range), rest)) = search.split_first() {
 			if s.y + range < y {
 				search = rest;
@@ -87,7 +87,7 @@ pub fn solve()
 				}
 			}
 			// i.e. found nothing
-			// break 'fy;
+			// break '_fy;
 		}
 	}
 	tot += start.elapsed().as_secs_f32();

@@ -1,4 +1,4 @@
-use std::{collections::{HashSet}, slice::SliceIndex};
+use std::{collections::{HashSet}};
 use vek::{Vec2};
 
 use aoc_util::parse_t::*;

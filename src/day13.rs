@@ -1,7 +1,5 @@
 use std::cmp::Ordering;
 
-use aoc_util::parse_t::*;
-
 #[derive(Debug, Clone)]
 enum Packet {
 	List(Vec<Packet>),
@@ -16,8 +14,8 @@ impl Ord for Packet {
 			(List(s), List(o)) => {
 				let mut sit = s.iter();
 				let mut oit = o.iter();
-				while let (s, o) = (sit.next(), oit.next()) {
-					match (s, o) {
+				loop {
+					match (sit.next(), oit.next()) {
 						(Some(s), Some(o)) => {
 							let ord = s.cmp(o);
 							if ord != Ordering::Equal {
@@ -29,7 +27,6 @@ impl Ord for Packet {
 						(None, None) => return Ordering::Equal,
 					};
 				}
-				Ordering::Equal
 			},
 			(List(s), Num(_)) => {
 				if s.len() < 1 {

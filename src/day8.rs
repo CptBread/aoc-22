@@ -1,6 +1,3 @@
-use std::collections::{HashMap, HashSet};
-use uni_path::{Path, PathBuf};
-
 use aoc_util::array2d::*;
 
 fn prop_vis_step(start: Pos, dx: isize, dy: isize, arr: &mut Array2D<(u8, bool)>) {
@@ -89,8 +86,6 @@ fn eval(idx: usize, arr: &Array2D<(u8, bool)>) -> usize {
 #[allow(dead_code)]
 pub fn solve()
 {
-	let data = std::fs::read_to_string("data/day8.txt").unwrap();
-
 	let mut arr = Array2D::load_file("data/day8.txt", |c| (c as u8 - b'0', false));
 	prop_vis(&mut arr);
 	// arr.print(|v| (v.0 + b'0') as char );
