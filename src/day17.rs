@@ -78,7 +78,7 @@ pub fn solve() {
 						println!("{:?}", (size, n, v, max));
 						let size = cycle * size;
 
-						let left = (1_000_000_000_000u64 - n);
+						let left = 1_000_000_000_000u64 - n;
 
 						let fill = left / size as u64;
 						calc_h = max as u64 + (fill * v as u64);
