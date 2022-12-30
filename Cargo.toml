@@ -11,6 +11,6 @@ vek = "0.15.*"
 intbits = "0.2.0"
 retain_mut = "0.1.5"
 rand = "0.8.*"
-#aoc_util = {git = "https://github.com/CptBread/aoc-util"}
-aoc_util = {path = "N:/Programming/Projects/Rust/aoc-util"}
+aoc_util = {git = "https://github.com/CptBread/aoc-util"}
+#aoc_util = {path = "N:/Programming/Projects/Rust/aoc-util"}
 uni-path = "1.51.1"

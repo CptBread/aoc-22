@@ -1,4 +1,4 @@
-use std::collections::{HashSet, HashMap, VecDeque};
+use std::collections::{HashMap, VecDeque};
 use itertools::Itertools;
 use vek::Vec3;
 type Pos = Vec3<i32>;
