@@ -50,16 +50,36 @@ impl State {
 			*c += *g;
 		}
 	}
+
+	fn tick_n(&mut self, n: u32) {
+		for (c, g) in &mut self.0 {
+			*c += *g * n;
+		}
+	}
 }
 
-
-fn buy_bot(r: Resource, s: &State, bp: &Bp) -> Option<State> {
+fn buy_bot(r: Resource, time: &mut u32, s: &State, bp: &Bp) -> Option<State> {
 	let mut res = s.clone();
+	let mut takes = 0;
+	for (cr, c) in bp[r as usize].cost.iter().cloned() {
+		let d = &res.0[cr as usize];
+		if d.0 < c {
+			if d.1 == 0 {
+				return None;
+			}
+			let left = c - d.0;
+			takes = takes.max((left + d.1 - 1) / d.1);
+		}
+	}
+	if takes >= *time {
+		return None;
+	}
+	*time -= takes + 1;
+	res.tick_n(takes + 1);
 	for (cr, c) in bp[r as usize].cost.iter().cloned() {
 		let d = &mut res.0[cr as usize];
-		d.0 = d.0.checked_sub(c)?;
+		d.0 = d.0 - c;
 	}
-	res.tick();
 	res.0[r as usize].1 += 1;
 	Some(res)
 }
@@ -78,9 +98,22 @@ pub fn solve() {
 		]);
 	}
 	let bp: &Bp = &bps[0];
+	let mut tot = 0;
+	for (id, bp) in bps.iter().enumerate() {
+		let res = dbg!(start_search(24, bp));
+		tot += res * (id as u32 + 1);
+	}
 	// let mut start = State([(0,1), (0, 0), (0, 0), (0, 0)]);
-	dbg!(start_search(24, bp));
-}
+	// dbg!(start_search(24, bp));
+	println!("{}", tot);
+
+// 	let mut tot = 1;
+// 	for bp in bps[0..3].iter() {
+// 		let res = dbg!(start_search(34, bp));
+// 		tot *= res;
+// 	}
+// 	println!("{}", tot);
+// }
 
 fn start_search(mut left: u32, bp: &Bp) -> RCount {
 	let mut state = State([(0,1), (0, 0), (0, 0), (0, 0)]);
@@ -98,12 +131,19 @@ fn search(left: u32, mut state: State, bp: &Bp) -> RCount {
 		return state.0[Resource::Geode as usize].0;
 	}
 	let mut best = 0;
+	let mut missed = 0;
 	for r in Resource::iter() {
-		if let Some(res) = buy_bot(r, &mut state, bp) {
-			best = best.max(search(left - 1, res, bp));
+		let mut t = left;
+		if let Some(res) = buy_bot(r, &mut t, &mut state, bp) {
+			best = best.max(search(t, res, bp));
+		}
+		else {
+			missed += 1;
 		}
 	}
-	state.tick();
-	best = best.max(search(left - 1, state, bp));
+	if missed > 0 {
+		state.tick_n(left);
+		best = best.max(search(0, state, bp));
+	}
 	best
 }

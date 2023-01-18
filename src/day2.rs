@@ -15,7 +15,7 @@ pub fn solve()
 	let scorer = [1, 2, 3];
 	let outcomes = [(1, 2), (2, 0), (0, 1)]; // (wins, loses) idx what they played
 
-	let (strat, _) = parse_f!(data, (seperated_f("\r\n", parser), "")).unwrap();
+	let (strat, _) = parse_f!(data, (seperated("\r\n", parser), "")).unwrap();
 	let mut tot = 0;
 	let mut tot2 = 0;
 	for (p, r) in strat.iter() {
